@@ -1,10 +1,22 @@
 import express, { json } from "express";
 import fetch from "node-fetch";
-
+import bodyParser from "body-parser";
+import { MongoClient, ObjectId } from "mongodb";
 const app = express();
-const PORT = 8080;
+const PORT = 3000;
 
-app.use(json()); //Middleware
+// Connect to Mongo DB
+const uri =
+	"mongodb+srv://Jessedancr:MightyGod%401@task-9-mongo-way.glnrpcz.mongodb.net/?appName=task-9-mongo-way";
+const client = new MongoClient(uri);
+client.connect().then(() => console.log("Connected to Mongo DB"));
+
+// MIDDLEWARES
+app.use(json()); // Middleware to parse JSON bodies
+app.use((req, res, next) => {
+	req.db = client.db("task_9");
+	next();
+}); // Middleware to attach DB to request body
 
 let users = [];
 
@@ -26,6 +38,18 @@ const callApi = async () => {
 
 // FETCH USER DATA INITIALLY
 callApi();
+
+app.get("/populate", async (req, res) => {
+	try {
+		const collection = await req.db.collection("users");
+		const insertUsers = await collection.insertMany(users);
+		res.json(insertUsers);
+		console.log(insertUsers);
+	} catch (error) {
+		console.log(error);
+		res.json(error);
+	}
+});
 
 app.get("/", (req, res) => {
 	res.send("H O M E S C R E E N");
