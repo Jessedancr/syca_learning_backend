@@ -1,13 +1,13 @@
+import dotenv from "dotenv";
 import express, { json } from "express";
 import fetch from "node-fetch";
-import bodyParser from "body-parser";
 import { MongoClient, ObjectId } from "mongodb";
+dotenv.config(); // Configuring dotenv to load environment variables from .env file
 const app = express();
 const PORT = 3000;
 
 // Connect to Mongo DB
-const uri =
-	"mongodb+srv://Jessedancr:MightyGod%401@task-9-mongo-way.glnrpcz.mongodb.net/?appName=task-9-mongo-way";
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 client.connect().then(() => console.log("Connected to Mongo DB"));
 
