@@ -1,7 +1,9 @@
 import dotenv from "dotenv";
+
 import express, { json } from "express";
 import fetch from "node-fetch";
 import { MongoClient, ObjectId } from "mongodb";
+
 dotenv.config(); // Configuring dotenv to load environment variables from .env file
 const app = express();
 const PORT = 3000;
@@ -16,7 +18,7 @@ app.use(json()); // Middleware to parse JSON bodies
 app.use((req, res, next) => {
 	req.db = client.db("task_9");
 	next();
-}); // Middleware to attach DB to request body
+}); // Middleware to attach DB to all request bodies
 
 let users = [];
 
@@ -39,6 +41,7 @@ const callApi = async () => {
 // FETCH USER DATA INITIALLY
 callApi();
 
+// ENDPOINT TO TRANSFER ALL FETCHED API DATA TO DB
 app.get("/populate", async (req, res) => {
 	try {
 		const collection = await req.db.collection("users");
@@ -61,7 +64,7 @@ app.get("/users", (req, res) => {
 });
 
 // ENDPOINT TO GET SPECIFIC USER PROPS
-app.get("/:key", (req, res) => {
+app.get("/users/:key", (req, res) => {
 	const key = req.params.key;
 
 	if (key in users[0]) {
@@ -89,15 +92,53 @@ app.delete("/deleteall", (req, res) => {
 });
 
 // ENDPOINT TO ADD NEW USER
-app.post("/newuser", (req, res) => {
+app.post("/newuser", async (req, res) => {
 	const newUser = req.body;
 	if (newUser.name && newUser.username && newUser.email) {
 		const newId = users.length > 0 ? users[users.length - 1].id + 1 : 1;
 		newUser.id = newId;
 		users.push(newUser);
-		res.json(newUser);
+
+		// To add new user to DB
+		const collection = await req.db.collection("users");
+		const insertUser = await collection.insertOne(newUser);
+		console.log(insertUser);
+		res.json({ message: "user added successfully", status: insertUser });
 	} else {
 		res.json({ message: "Invalid user data" });
+	}
+});
+
+// ENDPOINT TO LOGIN
+app.post("/login", (req, res) => {
+	const oldUser = {
+		username: req.body.username,
+		email: req.body.email,
+	};
+
+	// The some() method takes an array and compares each element in it
+	// to a value (in this case, the oldUser object). Returns boolean
+	const userExists = users.some(
+		(users) =>
+			users.username === oldUser.username && users.email === oldUser.email,
+	);
+	if (userExists) {
+		console.log(oldUser);
+		return res.redirect(`/status`);
+	} else {
+		return res.redirect("/status?message=user does not exist");
+	}
+});
+
+// ROUTE TO SHOW LOGIN STATUS
+app.get("/status", (req, res) => {
+	const message = req.query.message;
+	if (!message) {
+		console.log("Logged in successfully");
+		res.json({ message: "Logged in successfully" });
+	} else {
+		console.log("user does not exist");
+		res.json({ message });
 	}
 });
 
