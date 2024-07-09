@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tribute page</title>
+	</head>
+	<body>
+		<h1>GAME OF THRONES</h1>
+
+		<%# HOUSE TARGARYEN %>
+		<p><b>Targaryen: </b><%= targaryen.words %></p>
+		<% targaryen.members.forEach(member =>{%>
+		<li><%= member %></li>
+		<% }) %> <%# HOUSE STARK %>
+		<p><b>Stark: </b><%= stark.words %></p>
+		<% stark.members.forEach(member => { %>
+		<li><%= member %></li>
+		<% }) %> <%# HOUSE LANNISTER %>
+		<p><b>Lannister: </b><%= lannister.words %></p>
+		<% lannister.members.forEach(member => {%>
+		<li><%= member %></li>
+		<% }) %>
+	</body>
+</html>
