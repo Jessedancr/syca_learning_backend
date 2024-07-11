@@ -1,0 +1,11 @@
+<html>
+	<head>
+		<title>SEARCH LIST</title>
+	</head>
+	<body>
+		<h1>SEARCH HISTORY</h1>
+		<% searches.forEach(search => {%>
+		<li><%= search.Search %> - <%= search.searchTime %></li>
+		<% }) %>
+	</body>
+</html>
