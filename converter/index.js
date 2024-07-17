@@ -64,6 +64,11 @@ app.get("/history", (req, res) => {
 });
 
 app.get("/signup", async (req, res) => {
+	console.log("/signup by GET has been hit");
+	res.render("signup");
+});
+app.post("/signup", async (req, res) => {
+	console.log("/signup by POST has been hit");
 	const newUser = req.body;
 	try {
 		if (newUser.username && newUser.password) {
@@ -73,11 +78,11 @@ app.get("/signup", async (req, res) => {
 			const collection = await req.db.collection("converter_users");
 			const insertUser = await collection.insertOne(newUser);
 			console.log("New User", insertUser);
+			res.render("on_signup");
 		}
 	} catch (error) {
 		console.log(error);
 	}
-	res.render("signup", { newUser });
 });
 
 app.get("/login", async (req, res) => {
