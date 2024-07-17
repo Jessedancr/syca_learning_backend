@@ -1,14 +1,21 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { MongoClient } from "mongodb";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import dotenv from "dotenv";
 const app = express();
 const port = 8080;
+dotenv.config();
 
 // CONNECTING TO MONGODB
-const uri =
-	"mongodb+srv://jessedancr:MightyGod%401@converter.szml5xk.mongodb.net/?retryWrites=true&w=majority&appName=converter";
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 client.connect().then(() => console.log("Connected to Mongo DB"));
+
+// Passing DB and collections name to variables
+const db = client.db("users");
+const historyCollection = db.collection("history");
 
 app.use(bodyParser.urlencoded({ extended: true })); // To parse bodies from HTML forms
 app.use(bodyParser.json());
@@ -18,8 +25,22 @@ app.use((req, res, next) => {
 	next();
 }); // Middleware to attach DB to all request bodies
 
-let users = [];
-let history = [];
+// USER SESSION MIDDLEWARE CONFIG
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET_KEY,
+		resave: false,
+		saveUninitialized: true,
+		store: MongoStore.create({
+			client: client,
+			dbName: "users",
+			collectionName: "history",
+		}),
+		cookie: { secure: false },
+	}),
+);
+
+let usersList = [];
 const options = ["°C to °F", "M to Cm", "KG to lbs", "inch to Cm"];
 let conversion;
 
@@ -41,26 +62,30 @@ app.post("/convert", (req, res) => {
 
 	if (conversionType === "°C to °F") {
 		conversion = (numberInput * 9) / 5 + 32;
-		history.push(conversion);
 		res.render("convert", { conversion, options });
 	} else if (conversionType === "M to Cm") {
 		conversion = numberInput * 100;
-		history.push(conversion);
 		res.render("convert", { conversion, options });
 	} else if (conversionType === "KG to lbs") {
 		conversion = numberInput * 2.20462;
-		history.push(conversion);
 		res.render("convert", { conversion, options });
 	} else if (conversionType === "inch to Cm") {
 		conversion = numberInput * 2.54;
-		history.push(conversion);
 		res.render("convert", { conversion, options });
 	}
-	console.log(history);
+
+	// STORE CONVERSION HISTORY IN DB
+	historyCollection.insertOne({
+		conversionType,
+		numberInput,
+		conversion,
+	});
 });
 
-app.get("/history", (req, res) => {
-	res.render("history");
+app.get("/history", async (req, res) => {
+	const conversionHistory = await historyCollection.find().toArray();
+	console.log("From /history:", conversionHistory);
+	res.render("history", { history: conversionHistory });
 });
 
 app.get("/signup", async (req, res) => {
@@ -72,11 +97,11 @@ app.post("/signup", async (req, res) => {
 	const newUser = req.body;
 	try {
 		if (newUser.username && newUser.password) {
-			users.push(newUser);
+			usersList.push(newUser);
 
 			// Add new user to DB
-			const collection = await req.db.collection("converter_users");
-			const insertUser = await collection.insertOne(newUser);
+			const usersCollection = await req.db.collection("converter_users");
+			const insertUser = await usersCollection.insertOne(newUser);
 			console.log("New User", insertUser);
 			res.render("on_signup");
 		}
