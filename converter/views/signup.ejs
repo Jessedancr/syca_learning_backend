@@ -4,22 +4,26 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="styles.css" />
-		<title>LOGIN</title>
+		<title>SignUp</title>
 	</head>
 	<body>
-		<div>
-			<h1>USER SIGN UP</h1>
+		<div class="signup_form">
+			<h1>User Sign Up</h1>
 			<form action="/signup" method="post">
-				<div>
-					<label for="username">USERNAME</label>
-					<input id="username" type="text" name="username" />
+				<div class="signup_username">
+					<label for="username"><b>Username</b></label>
+					<input id="username" type="text" name="username" class="textfield" />
 				</div>
 				<br />
-				<div>
-					<label for="password">PASSWORD</label>
-					<input id="password" type="password" name="password" />
+				<div class="signup_password">
+					<label for="password"><b>Password</b></label>
+					<input
+						id="password"
+						type="password"
+						name="password"
+						class="textfield" />
 					<br />
-					<button type="submit">SIGN UP</button>
+					<button type="submit" class="button"><b>SIGN UP</b></button>
 				</div>
 			</form>
 		</div>

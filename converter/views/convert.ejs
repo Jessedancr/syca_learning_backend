@@ -4,15 +4,15 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
 		<link rel="stylesheet" href="styles.css" />
-		<title>CONVERTER</title>
+		<title>Converter</title>
 	</head>
 	<body>
-		<h1>CONVERTER</h1>
 		<div class="converter">
+			<h1>Converter</h1>
 			<form action="/convert" method="post">
-				<div>
-					<label for="dropdown">CHOOSE AN OPTION</label>
-					<select name="conversionType" id="dropdown">
+				<div class="dropdown">
+					<label for="dropdown"><b>Choose an Option</b></label>
+					<select name="conversionType" id="dropdown" class="textfield">
 						<% options.forEach(option => {%>
 						<option value="<%= option %>"><%= option %></option>
 						<%}) %>
@@ -20,13 +20,17 @@
 				</div>
 
 				<br />
-				<div>
-					<label for="numberInput">Enter a number:</label>
-					<input id="numberInput" type="number" name="numberInput" />
-				</div>
+				<div class="convert">
+					<label for="numberInput"><b>Enter a number: </b></label>
+					<input
+						id="numberInput"
+						type="number"
+						name="numberInput"
+						class="textfield" />
 
-				<br />
-				<button type="submit">Convert</button>
+					<br />
+					<button type="submit" class="button"><b>CONVERT</b></button>
+				</div>
 				<p><b>RESULT: <%= conversion %></b></p>
 			</form>
 			<a href="/history">View History</a>

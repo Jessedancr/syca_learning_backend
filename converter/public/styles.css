@@ -7,15 +7,47 @@ body {
 	background-color: beige;
 }
 
-.username{
+.login_username,
+.login_password,
+.signup_username,
+.signup_password {
 	padding: 10px;
 }
 
-.password{
-	padding: 10px;
+.converter,
+.login_form,
+.signup_form {
+	background-color: burlywood;
+	height: 300px;
+	border-radius: 20px;
+	padding: 20px;
+
 }
 
-.password button{
+.textfield {
+	height: 20px;
+	font-size: medium;
+	border-radius: 7px;
+	outline-color: darkkhaki;
+}
+
+.convert button,
+.signup_password button,
+.login_password button {
 	width: 100%;
 	margin-top: 30px;
+	background-color: darkkhaki;
+	border-radius: 20px;
+	height: 30px;
+}
+.button:hover {
+	background-color: chocolate;
+}
+
+.dropdown{
+	margin: 10px;
+}
+
+.convert{
+	margin: 10px;
 }
