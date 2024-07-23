@@ -9,11 +9,12 @@
 		<h1>Conversion History</h1>
 		<ul>
 			<% history.forEach(item =>{%> <% if(item.conversionType &&
-			item.numberInput !== undefined && item.conversion !== undefined){%>
+			item.numberInput !== undefined && item.conversion !== undefined && item.timeStamp !== undefined){%>
 			<li>
 				<p><b>conversion Type: </b><%= item.conversionType %></p>
 				<p><b>numberInput: </b><%= item.numberInput %></p>
 				<p><b>conversion result: </b><%= item.conversion %></p>
+				<p><b>Time Stamp: </b><%= item.timeStamp %></p>
 			</li>
 			<% } %> <% }) %>
 		</ul>
