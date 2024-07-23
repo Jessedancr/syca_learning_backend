@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="styles.css" />
+		<title>Food store</title>
+	</head>
+	<body>
+		<div class="FoodStore">
+			<h1 class="StoreHeader">F O O D S T O R E</h1>
+			<form action="/order" method="post">
+				<div>
+					<label for="name"><b>Name: </b></label>
+					<input id="name" type="text" name="name" class="textfield" />
+				</div>
+				<br />
+				<div>
+					<label for="email"><b>Email: </b></label>
+					<input id="email" type="email" name="email" class="textfield"/>
+				</div>
+				<br />
+				<div class="Dropdown">
+					<label for="dropdown"><b>Choose from menu: </b></label>
+					<select id="dropdown" name="food" class="textfield">
+						<% foods.forEach(food => {%>
+						<option value="<%= food %>"><%= food %></option>
+						<%}) %>
+					</select>
+					<br />
+					<button type="submit" class="button">Place Order</button>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

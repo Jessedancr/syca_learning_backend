@@ -1,0 +1,42 @@
+body {
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 100vh;
+	background-color: beige;
+}
+.link {
+	color: darkgoldenrod;
+}
+
+.HomePage,
+.FoodStore {
+	background-color: burlywood;
+	height: 200px;
+	border-radius: 20px;
+	padding: 40px;
+}
+
+.StoreHeader {
+	margin-bottom: 10px;
+	margin-top: 0px;
+}
+
+.textfield {
+	height: 20px;
+	font-size: medium;
+	border-radius: 7px;
+	outline-color: darkkhaki;
+}
+
+.Dropdown button {
+	width: 100%;
+	margin-top: 10px;
+	background-color: darkkhaki;
+	border-radius: 20px;
+	height: 30px;
+}
+.button:hover {
+	background-color: chocolate;
+}
