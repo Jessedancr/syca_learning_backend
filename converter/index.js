@@ -48,6 +48,7 @@ app.get("/", (req, res) => {
 	res.send("H O M E P A G E");
 });
 
+
 // SIGN UP ENDPOINTS
 app.get("/signup", async (req, res) => {
 	console.log("/signup by GET has been hit");

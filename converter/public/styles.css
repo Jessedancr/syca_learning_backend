@@ -14,14 +14,40 @@ body {
 	padding: 10px;
 }
 
+.on_sign_up{
+	background-color: burlywood;
+	height: 30%;
+	border-radius: 20px;
+	padding: 20px;
+}
 .converter,
 .login_form,
 .signup_form {
 	background-color: burlywood;
-	height: 300px;
+	height: 55%;
 	border-radius: 20px;
 	padding: 20px;
+}
 
+.history {
+	background-color: burlywood;
+	height: 100vh;
+	border-radius: 20px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+
+
+.history_content {
+	background-color: #f5deb3;
+	border-radius: 20px;
+	padding: 7px;
+	margin: 10px;
+	flex: 1;
+	overflow-y: auto;
 }
 
 .textfield {
@@ -36,18 +62,18 @@ body {
 .login_password button {
 	width: 100%;
 	margin-top: 30px;
-	background-color: darkkhaki;
+	background-color: #d2b48c;
 	border-radius: 20px;
 	height: 30px;
 }
 .button:hover {
-	background-color: chocolate;
+	background-color: #f5deb3;
 }
 
-.dropdown{
+.dropdown {
 	margin: 10px;
 }
 
-.convert{
+.convert {
 	margin: 10px;
 }
