@@ -1,0 +1,31 @@
+body {
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 100vh;
+	background-color: beige;
+}
+
+.myDiv{
+    background-color: burlywood;
+    height: 200px;
+	border-radius: 20px;
+	padding: 20px;
+}
+.textfield{
+    height: 20px;
+	font-size: medium;
+	border-radius: 7px;
+	outline-color: darkkhaki;
+}
+.myButton{
+    width: 100%;
+	margin-top: 30px;
+	background-color: darkkhaki;
+	border-radius: 20px;
+	height: 30px;
+}
+.myButton:hover{
+    background-color: chocolate;
+}
