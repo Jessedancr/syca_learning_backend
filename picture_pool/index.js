@@ -5,8 +5,10 @@ import { fileURLToPath } from "url";
 import { MongoClient } from "mongodb";
 import bodyParser from "body-parser";
 import fs from "fs";
+import dotenv from "dotenv";
 const app = express();
 const port = 8080;
+dotenv.config();
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -14,8 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // CONNECT TO MONGO DB
-const uri =
-	"mongodb+srv://Jessedancr:MIGHTYGOD@picture-pool.76ybmxd.mongodb.net/?retryWrites=true&w=majority&appName=picture-pool";
+const uri = process.env.MONGO_URI
 const client = new MongoClient(uri);
 client.connect().then(() => console.log("Connected to MongoDB"));
 
@@ -42,7 +43,7 @@ const fileFilter = (req, file, func) => {
 	// Regex to allow certain file types
 	// 'file.originalname' is the actual name of the file uploaded
 	// It is contained in the 'originalname' prop of the file object
-	// Using the .test() function that comes with regex to check if the 
+	// Using the .test() function that comes with regex to check if the
 	// file extension matches the specified regex pattern
 	const allowedTypes = /jpeg|jpg|png|gif/;
 	const filepath = path.extname(file.originalname).toLowerCase();
@@ -74,7 +75,6 @@ app.get("/adsignup", (req, res) => {
 	res.render("signup");
 });
 app.post("/on_adsignup", async (req, res) => {
-	
 	const newAdmin = req.body;
 	try {
 		if (newAdmin.username && newAdmin.email && newAdmin.password) {
