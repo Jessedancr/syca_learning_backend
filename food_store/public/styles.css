@@ -10,6 +10,7 @@ body {
 	color: darkgoldenrod;
 }
 
+.order_received,
 .HomePage,
 .FoodStore {
 	background-color: burlywood;

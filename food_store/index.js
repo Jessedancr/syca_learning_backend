@@ -16,7 +16,16 @@ app.get("/", (req, res) => {
 
 // GET ROUTE TO DISPLAY THE UI
 app.get("/store", (req, res) => {
-	const foods = ["Jollof rice", "Ewa Agoyin", "Semo and Egusi", "Fried rice"];
+	const foods = [
+		"Jollof rice",
+		"Fried rice",
+		"Bread and Ewa Agoyin",
+		"Semo and Egusi",
+		"Amala and Ewedu",
+		"Groceries with groundut",
+		"Pizza",
+		"Shawarma"
+	];
 	res.render("store", { foods });
 });
 
@@ -43,13 +52,13 @@ app.post("/order", (req, res) => {
 		text: message,
 	};
 
-    // sendMail funtion sends the mail using the defined mail options
+	// sendMail funtion sends the mail using the defined mail options
 	transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
 			console.log(error);
 		}
 		console.log("Email sent: " + info.response);
-		res.send("Order placed and email sent to " + email);
+		res.render("order_received", { email });
 	});
 });
 
