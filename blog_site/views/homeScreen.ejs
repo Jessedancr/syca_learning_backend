@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>HomePage</title>
+	</head>
+	<body>
+		<h1>HomePage</h1>
+		<header>
+			<nav>
+				<% if (!session.user) { %>
+				<span>
+					<li>
+						<b><a href="/login">Login</a></b>
+					</li>
+					<li>
+						<b><a href="/signup">Sign up</a></b>
+					</li>
+				</span>
+				<% } else{ %>
+				<span>
+					<li>
+						<b><a href="/profile">View profile</a></b>
+					</li>
+					<li>
+						<b><a href="/home/create">Create post</a></b>
+					</li>
+					<li>
+						<b><a href="/logout">Logout</a></b>
+					</li>
+				</span>
+				<%} %>
+			</nav>
+		</header>
+		<ul>
+			<% data.forEach(post => { %>
+			<li>
+				<span
+					><h3>
+						<a href="/post/<%= post._id %>"><%= post.postTitle %></a>
+					</h3></span
+				>
+				<span><p><%= post.postContent %></p></span>
+			</li>
+			<% }) %>
+		</ul>
+	</body>
+</html>

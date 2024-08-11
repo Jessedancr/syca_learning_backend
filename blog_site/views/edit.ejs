@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Edit Post</title>
+	</head>
+	<body>
+		<h1>EDIT POST</h1>
+		<form action="/profile/post/<%= post._id %>/edit" method="post">
+			<div class="postTitle">
+				<label for="postTitle">PostTitle</label>
+				<Input
+					type="text"
+					id="postTitle"
+					name="postTitle"
+					class="input"
+					value="<%= post.postTitle %>"
+					required />
+			</div>
+			<br />
+			<div class="postContent">
+				<label for="postContent">PostContent</label>
+				<textarea
+					name="postContent"
+					id="postContent"
+					cols="50"
+					rows="10"
+					required>
+                    <%= post.postContent %>
+                </textarea
+				>
+			</div>
+			<div class="button">
+				<button type="submit">Post</button>
+			</div>
+		</form>
+	</body>
+</html>
