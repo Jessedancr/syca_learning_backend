@@ -7,6 +7,10 @@
 	</head>
 	<body>
 		<h1>HomePage</h1>
+
+		<!-- Header Section
+				Displays navigation links based on user session
+			 -->
 		<header>
 			<nav>
 				<% if (!session.user) { %>
@@ -33,6 +37,10 @@
 				<%} %>
 			</nav>
 		</header>
+
+		<!-- Post lists section
+		 Displays all posts from database
+		  -->
 		<ul>
 			<% data.forEach(post => { %>
 			<li>
@@ -42,6 +50,10 @@
 					</h3></span
 				>
 				<span><p><%= post.postContent %></p></span>
+				<img
+					src="<%=post.imagePath %>"
+					alt="uploaded image"
+					style="max-width: 200px" />
 			</li>
 			<% }) %>
 		</ul>

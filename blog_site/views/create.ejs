@@ -7,12 +7,21 @@
 	</head>
 	<body>
 		<h1>Create A New Post</h1>
-		<form action="/" method="post">
+		<!-- 
+			Form to create a new post.
+		-->
+		<form action="/" method="post" enctype="multipart/form-data">
+			<!-- 
+				Input field for post title.
+			-->
 			<div class="postTitle">
 				<label for="postTitle">PostTitle</label>
 				<Input type="text" id="postTitle" name="postTitle" class="input" />
 			</div>
 			<br />
+			<!-- 
+				Text area for post content.
+			-->
 			<div class="postContent">
 				<label for="postContent">PostContent</label>
 				<textarea
@@ -21,6 +30,16 @@
 					cols="50"
 					rows="10"></textarea>
 			</div>
+			<!-- 
+				Input field for adding an image.
+			-->
+			<div class="add-image">
+				<label for="image">Add Image</label>
+				<input type="file" name="image" id="image" />
+			</div>
+			<!-- 
+				Submit button to post the form.
+			-->
 			<div class="button">
 				<button type="submit">Post</button>
 			</div>

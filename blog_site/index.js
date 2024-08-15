@@ -3,16 +3,17 @@ import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import session from "express-session";
 import mongoStore from "connect-mongo";
+import bodyParser from "body-parser";
 import homeRouter from "./api/routes/homeScreen.js";
 import loginRouter from "./api/routes/login.js";
 import signupRouter from "./api/routes/signup.js";
 import home from "./api/routes/home.js";
 import profileRouter from "./api/routes/profile.js";
-import bodyParser from "body-parser";
+
 dotenv.config(); // Load environment variables
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 // CONNECT TO MONGO DB AND CREATE USER POSTS SCHEMA
 const uri = process.env.MONGO_URI;
@@ -36,6 +37,10 @@ async function createUserPostsCollection(db) {
 			postContent: {
 				bsonType: "string",
 				description: "Is required and must be a string",
+			},
+			imagePath: {
+				bsonType: "string",
+				description: "path to uploaded file if any",
 			},
 		},
 	};
@@ -76,6 +81,9 @@ app.use((req, res, next) => {
 	next();
 }); // Middleware to attach DB to all request bodies
 
+/**
+ * Express session middleware configuration
+ */
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET_KEY,

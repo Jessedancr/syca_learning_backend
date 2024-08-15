@@ -1,6 +1,21 @@
 import express from "express";
+import path from "path";
+import multer from "multer";
 import { ObjectId } from "mongodb";
+
 const home = express.Router();
+
+// MULTER CONFIG
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "public/uploads/");
+	},
+	filename: function (req, file, cb) {
+		cb(null, Date.now() + path.extname(file.originalname));
+	},
+});
+
+const upload = multer({ storage }); // initialize multer with configs
 
 /**
  * ROUTE DISPLAYING THE VIEW ONLY HOME PAGE
@@ -27,19 +42,21 @@ home.get("/", async (req, res) => {
  * @example
  * POST / => creates a new post with title "Hello World" and content "This is my first post"
  */
-home.post("/", async (req, res) => {
+home.post("/", upload.single("image"), async (req, res) => {
 	const { postTitle, postContent } = req.body;
 	const { id } = req.session.user;
-	console.log(req.session);
+
+	// Modifying file path to start from root of the server for the browser to understand
+	let imagePath = `/uploads/${req.file.filename}`;
+	console.log(req.file);
 
 	const collection = await req.db.collection("userPosts");
 	if (postTitle && postContent) {
-		await collection.insertOne({ postTitle, postContent, id });
+		await collection.insertOne({ postTitle, postContent, id, imagePath });
 	}
 
 	res.redirect("/");
 });
-
 
 /**
  * LOGOUT ROUTE
@@ -68,6 +85,7 @@ home.get("/post/:postid", async (req, res) => {
 		const _id = new ObjectId(req.params.postid); // Convert to ObjectId
 		const collection = await req.db.collection("userPosts");
 		const post = await collection.findOne({ _id });
+
 		res.render("post", { post });
 	} catch (error) {
 		console.log(error);

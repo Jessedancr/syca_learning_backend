@@ -45,7 +45,7 @@ signupRouter.post("/signup", async (req, res) => {
 			 * Fetches the newly created user from the database.
 			 * @param {ObjectId} result.insertedId - ID of the newly created user.
 			 * @returns {Promise<Document>} - Newly created user document.
-			 * 
+			 *
 			 * Sets the user session.
 			 * @param {Object} req.session - Request session object.
 			 * @param {string} req.session.user.username - User username.
@@ -54,7 +54,7 @@ signupRouter.post("/signup", async (req, res) => {
 			const newUser = await collection.findOne({ _id: result.insertedId });
 			req.session.user = { username: newUser.username, id: newUser._id };
 			console.log("New User inserted: ", req.session.user);
-			res.render("homeScreen", { session: req.session });
+			res.redirect("home");
 		}
 	} catch (error) {
 		console.log(error);

@@ -1,7 +1,7 @@
 import express from "express";
 
 /**
- * Home router for handling home-related routes.
+ * Home router for handling '/home' related routes.
  */
 const homeRouter = express.Router();
 
@@ -28,10 +28,5 @@ homeRouter.get("/home/create", (req, res) => {
 	res.render("create");
 });
 
-// homeRouter.get("/delete", async (req, res) => {
-// 	const collection = await req.db.collection("userPosts");
-// 	await collection.deleteMany();
-// 	res.send("deleted successfully");
-// });
 
 export default homeRouter;

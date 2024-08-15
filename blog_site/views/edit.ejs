@@ -1,3 +1,11 @@
+<!-- 
+  HTML FORM TO EDIT POST
+  
+  This HTML form is used to edit a post. 
+  It includes fields for post title, post content, and image upload.
+  These fields would be populated by the post data stored in Mongo DB
+  -->
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -7,7 +15,10 @@
 	</head>
 	<body>
 		<h1>EDIT POST</h1>
-		<form action="/profile/post/<%= post._id %>/edit" method="post">
+		<form
+			action="/profile/post/<%= post._id %>/edit"
+			method="post"
+			enctype="multipart/form-data">
 			<div class="postTitle">
 				<label for="postTitle">PostTitle</label>
 				<Input
@@ -31,8 +42,13 @@
                 </textarea
 				>
 			</div>
+			<div class="upload-image">
+				<label for="file-input">Upload Image</label>
+				<input type="file" name="image" id="file-input" />
+			</div>
+			<br />
 			<div class="button">
-				<button type="submit">Post</button>
+				<button type="submit">Edit</button>
 			</div>
 		</form>
 	</body>

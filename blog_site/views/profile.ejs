@@ -1,3 +1,11 @@
+<!--
+  USER PROFILE
+ 
+  This template displays a user's profile information and their posted content.
+  It includes a navigation menu to go back to the home page and a list of posts
+  with edit and delete options.
+ -->
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,6 +25,10 @@
 				<div>
 					<b><a href="/post/<%= post._id %>"><%= post.postTitle %></a></b>
 					<p><%= post.postContent %></p>
+					<img
+						src="<%= post.imagePath %>"
+						alt="uploaded image"
+						style="max-width: 200px" />
 				</div>
 
 				<div class="buttons">

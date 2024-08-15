@@ -1,3 +1,12 @@
+<!--
+ *HTML template for displaying a user's post
+ 	This template expects the following variables to be defined:
+		- `post`: an object containing the post data, with the following properties:
+  		- `postTitle`: the title of the post
+  		- `postContent`: the content of the post
+  		- `imagePath`: the URL of the uploaded image
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -6,7 +15,14 @@
 		<title>User's post</title>
 	</head>
 	<body>
+		<nav>
+			<a href="/home"><b>Go Back To HomePage</b></a>
+		</nav>
 		<h1><%= post.postTitle %></h1>
-        <p><%= post.postContent %></p>
+		<p><%= post.postContent %></p>
+		<img
+			src="<%= post.imagePath %>"
+			alt="Uploaded image"
+			style="max-width: 200px" />
 	</body>
 </html>
