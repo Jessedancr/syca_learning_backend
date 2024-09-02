@@ -6,7 +6,7 @@
 		<title>Uploads</title>
 	</head>
 	<body>
-		<h1>UPLOADED IMAGES: </h1>
+		<h1>UPLOADED IMAGES:</h1>
 		<div>
 			<% files.forEach(file => { %>
 			<div>
@@ -15,6 +15,7 @@
 						src="<%= file.path %>"
 						style="max-width: 200px"
 						alt="uploaded image" />
+					<button type="submit">Delete</button>
 				</li>
 			</div>
 			<%}) %>

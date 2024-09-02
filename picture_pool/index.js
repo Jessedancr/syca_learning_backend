@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // CONNECT TO MONGO DB
-const uri = process.env.MONGO_URI
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 client.connect().then(() => console.log("Connected to MongoDB"));
 
@@ -108,7 +108,7 @@ app.post("/on_adlogin", async (req, res) => {
 		console.log(error);
 	}
 });
-app.post("/upload", upload.single("image"), (req, res) => {
+app.post("/upload", upload.single("image"), async (req, res) => {
 	console.log(req.file);
 	if (!req.file) {
 		res.status(404).send("No file uploaded");
@@ -118,12 +118,16 @@ app.post("/upload", upload.single("image"), (req, res) => {
 			filename: req.file.filename,
 			path: `/uploads/${req.file.filename}`,
 		});
+
+		const { filename, path } = req.file;
+		const collection = await req.db.collection("uploads");
+		await collection.insertOne({ filename, path });
 		res.render("upload", { message });
 	}
 });
 
 // DELETE ENDPOINT
-app.get("/delete/:filename", (req, res) => {
+app.get("/delete/:filename", async (req, res) => {
 	const fileName = req.params.filename;
 	const filePath = path.join(dirname, "public", "uploads", fileName); // Constructing the full path for the file
 	fs.unlink(filePath, (error) => {
