@@ -12,35 +12,39 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>User profile</title>
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="styles.css" />
 	</head>
 	<body>
-		<h1>USER PROFILE</h1>
-		<nav>
-			<h3><a href="/home">Go Back to HomePage</a></h3>
-		</nav>
-		<ul>
-			<% posts.forEach(post => { %>
-			<li>
-				<div>
-					<b><a href="/post/<%= post._id %>"><%= post.postTitle %></a></b>
-					<p><%= post.postContent %></p>
-					<img
-						src="<%= post.imagePath %>"
-						alt="uploaded image"
-						style="max-width: 200px" />
-				</div>
+		<header class="header">
+			<h1 class="profile">USER PROFILE</h1>
+			<nav class="navigation">
+				<h3><a href="/home" class="link">Go Back to HomePage</a></h3>
+			</nav>
+		</header>
+		<div class="container">
+			<ul class="post-list">
+				<% posts.forEach(post => { %>
+				<li>
+					<div class="posts">
+						<b><a href="/post/<%= post._id %>"><%= post.postTitle %></a></b>
+						<p><%= post.postContent %></p>
+						<img
+							src="<%= post.imagePath %>"
+							alt="uploaded image"
+							style="max-width: 80px" />
+					</div>
 
-				<div class="buttons">
-					<form action="/profile/post/<%= post._id %>/delete" method="post">
-						<button type="submit">Delete Post?</button>
-					</form>
-					<form action="/profile/post/<%= post._id %>/edit" method="get">
-						<button type="submit">Edit Post?</button>
-					</form>
-				</div>
-			</li>
-			<% }) %>
-		</ul>
+					<div class="buttons">
+						<form action="/profile/post/<%= post._id %>/delete" method="post">
+							<button type="submit"><b>Delete Post</b></button>
+						</form>
+						<form action="/profile/post/<%= post._id %>/edit" method="get">
+							<button type="submit"><b>Edit Post</b></button>
+						</form>
+					</div>
+				</li>
+				<% }) %>
+			</ul>
+		</div>
 	</body>
 </html>

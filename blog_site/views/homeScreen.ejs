@@ -3,59 +3,69 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="styles.css" />
 		<title>HomePage</title>
 	</head>
 	<body>
-		<h1>HomePage</h1>
-
 		<!-- Header Section
 				Displays navigation links based on user session
 			 -->
-		<header>
+		<header class="header">
+			<h1>HomePage</h1>
 			<nav>
 				<% if (!session.user) { %>
 				<span>
 					<li>
-						<b><a href="/login">Login</a></b>
+						<b><a href="/login" class="link">Login</a></b>
 					</li>
 					<li>
-						<b><a href="/signup">Sign up</a></b>
+						<b><a href="/signup" class="link">Sign up</a></b>
 					</li>
 				</span>
 				<% } else{ %>
 				<span>
 					<li>
-						<b><a href="/profile">View profile</a></b>
+						<b><a href="/profile" class="link">View profile</a></b>
 					</li>
 					<li>
-						<b><a href="/home/create">Create post</a></b>
+						<b><a href="/home/create" class="link">Create post</a></b>
 					</li>
 					<li>
-						<b><a href="/logout">Logout</a></b>
+						<b><a href="/logout" class="link">Logout</a></b>
 					</li>
 				</span>
 				<%} %>
 			</nav>
 		</header>
-
-		<!-- Post lists section
+		<div class="container">
+			<!-- Post lists section
 		 Displays all posts from database
 		  -->
-		<ul>
-			<% data.forEach(post => { %>
-			<li>
-				<span
-					><h3>
-						<a href="/post/<%= post._id %>"><%= post.postTitle %></a>
-					</h3></span
-				>
-				<span><p><%= post.postContent %></p></span>
-				<img
-					src="<%=post.imagePath %>"
-					alt="uploaded image"
-					style="max-width: 200px" />
-			</li>
-			<% }) %>
-		</ul>
+			<ul class="post-list">
+				<% data.forEach(post => { %>
+				<li class="posts">
+					<h3 class="link">
+						<a href="/post/<%= post._id %>" class="link"
+							><%= post.postTitle %></a
+						>
+					</h3>
+					<p><%= post.postContent.substring(0, 30)%>...</p>
+					<img
+						src="<%=post.imagePath %>"
+						alt="uploaded image"
+						style="max-width: 80px" />
+				</li>
+				<button type="button" class="myButton"><b>Leave a like</b></button>
+
+				<% }) %>
+			</ul>
+		</div>
 	</body>
+	<script>
+		document.querySelectorAll(".myButton").forEach((button) => {
+			button.addEventListener("click", function () {
+				this.classList.add("active");
+			});
+		});
+	</script>
 </html>
